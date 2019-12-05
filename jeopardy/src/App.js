@@ -4,13 +4,16 @@ import './App.css';
 import styled from 'styled-components'
 
 import useForm from './utils/useForm'
+import AnswerForm from './components/AnswerForm';
+import Question from './components/Question';
+import Score from './components/Score'
 
 function App() {
 
   const [question, setQuestion] = useState()
   const [total, setTotal] = useState(0)
 
-  const { values, handleChange, handleSubmit } = useForm(checkAnswer);
+  const { values } = useForm();
 
   useEffect(() => {
     const getQuestion = async () => {
@@ -42,24 +45,9 @@ function App() {
 
   return (
     <>
-      <div style={{ marginBottom: '2%' }}>
-        {question.category}
-      </div>
-      <div>
-        {question.question}
-      </div>
-      <div>
-        {question.value}
-      </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={handleChange}
-          values={values.answer}
-          name={"answer"} />
-      </form>
-      <div>
-        Total: ${total}
-      </div>
+      <Question question={question} />
+      <AnswerForm answer={question.answer} />
+      <Score total={total} />
     </>
   )
 }
