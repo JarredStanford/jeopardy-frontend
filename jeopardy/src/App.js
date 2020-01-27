@@ -13,7 +13,7 @@ function App() {
   const [question, setQuestion] = useState()
   const [total, setTotal] = useState(0)
 
-  const { values } = useForm();
+  const { values, handleChange, handleSubmit } = useForm(checkAnswer);
 
   useEffect(() => {
     const getQuestion = async () => {
@@ -44,12 +44,24 @@ function App() {
   if (question === undefined) return <div>Loading...</div>
 
   return (
-    <>
+    <MainContainer>
       <Question question={question} />
-      <AnswerForm answer={question.answer} />
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange}
+          values={values.answer}
+          name={"answer"} />
+      </form>
       <Score total={total} />
-    </>
+    </MainContainer>
   )
 }
 
 export default App;
+
+const MainContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100%`
