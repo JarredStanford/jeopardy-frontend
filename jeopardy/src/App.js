@@ -8,6 +8,8 @@ import AnswerForm from './components/AnswerForm';
 import Question from './components/Question';
 import Score from './components/Score'
 
+import { Input } from 'semantic-ui-react'
+
 function App() {
 
   const [question, setQuestion] = useState()
@@ -46,13 +48,15 @@ function App() {
   return (
     <MainContainer>
       <Question question={question} />
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={handleChange}
-          values={values.answer}
-          name={"answer"} />
-      </form>
-      <Score total={total} />
+      <div>
+        <form onSubmit={handleSubmit} style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+          <Input
+            onChange={handleChange}
+            values={values.answer}
+            name={"answer"} />
+        </form>
+        <Score total={total} />
+      </div>
     </MainContainer>
   )
 }
@@ -61,7 +65,7 @@ export default App;
 
 const MainContainer = styled.div`
 display: flex;
-flex-direction: column;
-justify-content: center;
+flex-direction: row;
+justify-content: space-evenly;
 align-items: center;
 height: 100%`
