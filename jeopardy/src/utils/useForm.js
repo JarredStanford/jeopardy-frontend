@@ -25,7 +25,8 @@ const useForm = callback => {
 		handleChange,
 		handleSubmit,
 		setValues,
-		values
+		values,
+		reset: () => setValues({ answer: '' })
 	};
 };
 

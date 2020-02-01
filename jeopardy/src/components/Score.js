@@ -17,7 +17,7 @@ const Score = props => {
             </LightBar>
             <Podium>
                 <ScoreBox>
-                    ${props.total}
+                    $ {props.total}
                 </ScoreBox>
                 <NameCard>
                     JARRED
@@ -31,17 +31,14 @@ export default Score
 
 const Podium = styled.div`
 background-color: black
-height: 15rem;
 width: 20rem;
-padding-left: 1rem;
-padding-top: 1rem;
+padding: 1rem;
 text-shadow: 2px 2px 4px #000000;`
 
 const LightBar = styled.div`
 background-color: lightgrey;
 width: 20rem;
-height: .5rem;
-padding: 2%;
+padding: 1.5%;
 margin-bottom: 2%;
 display: flex;
 justify-content: space-between;
