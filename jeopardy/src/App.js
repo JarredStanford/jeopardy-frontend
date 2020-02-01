@@ -8,16 +8,18 @@ import AnswerForm from './components/AnswerForm';
 import Question from './components/Question';
 import Score from './components/Score'
 
-import { Input } from 'semantic-ui-react'
+import { Form, Message } from 'semantic-ui-react'
 
 function App() {
 
   const [question, setQuestion] = useState()
   const [total, setTotal] = useState(0)
+  const [message, setMessage] = useState(false)
+  const [answer, setAnswer] = useState('')
 
   const { values, handleChange, handleSubmit } = useForm(checkAnswer);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const getQuestion = async () => {
       const result = await axios.get('http://localhost:8000/answers/random')
       setQuestion(result.data)
@@ -25,22 +27,32 @@ function App() {
     getQuestion()
 
     return setQuestion()
-  }, [])
+  }, [])*/
 
   const nextQuestion = async () => {
-    const result = await axios.get('http://localhost:8000/answers/random')
-    setQuestion(result.data)
+    const result = await axios.get('http://jservice.io/api/random')
+    setQuestion(result.data[0])
   }
 
+  useEffect(() => {
+
+    nextQuestion()
+
+    return setQuestion()
+
+  }, [])
+
   function checkAnswer() {
+    setAnswer(question.answer)
     if (question.answer.toLowerCase().includes(values.answer.toLowerCase())) {
-      console.log("Correct!")
-      setTotal(total => total += Number(question.value.replace(/[$,]+/g, '')))
+      setTotal(total => total += Number(question.value))
+      setMessage('Correct!')
     } else {
-      console.log("Incorrect!" + question.answer)
-      setTotal(total => total -= Number(question.value.replace(/[$,]+/g, '')))
+      setMessage('Incorrect!')
+      setTotal(total => total -= Number(question.value))
     }
     nextQuestion()
+    setTimeout(() => setMessage(false), 2000)
   }
 
   if (question === undefined) return <div>Loading...</div>
@@ -49,12 +61,17 @@ function App() {
     <MainContainer>
       <Question question={question} />
       <div>
-        <form onSubmit={handleSubmit} style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
-          <Input
-            onChange={handleChange}
-            values={values.answer}
-            name={"answer"} />
-        </form>
+        {!message && (
+          <Form onSubmit={handleSubmit} style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+            <Form.Input
+              autoFocus
+              onChange={handleChange}
+              values={values.answer}
+              name={"answer"}
+              style={{ width: '20rem' }} />
+          </Form>
+        )}
+        {message && (message === 'Correct!' ? <Message size='tiny' success floating>{message}</Message> : <Message size='tiny' error content={'Incorrect! ' + answer.toUpperCase()} />)}
         <Score total={total} />
       </div>
     </MainContainer>
@@ -64,8 +81,9 @@ function App() {
 export default App;
 
 const MainContainer = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-align-items: center;
-height: 100%`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;`
