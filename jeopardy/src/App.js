@@ -19,16 +19,6 @@ function App() {
 
   const { values, handleChange, handleSubmit } = useForm(checkAnswer);
 
-  /*useEffect(() => {
-    const getQuestion = async () => {
-      const result = await axios.get('http://localhost:8000/answers/random')
-      setQuestion(result.data)
-    }
-    getQuestion()
-
-    return setQuestion()
-  }, [])*/
-
   const nextQuestion = async () => {
     const result = await axios.get('http://jservice.io/api/random')
     setQuestion(result.data[0])
