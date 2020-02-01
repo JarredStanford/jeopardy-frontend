@@ -59,11 +59,13 @@ function App() {
 
   return (
     <MainContainer>
+      <img src='https://upload.wikimedia.org/wikipedia/commons/2/29/Jeopardy%21_logo.svg' alt='logo' style={{ width: '20rem' }} />
       <Question question={question} />
       <div>
         {!message && (
           <Form onSubmit={handleSubmit} style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
             <Form.Input
+              size='large'
               autoFocus
               onChange={handleChange}
               values={values.answer}
@@ -71,7 +73,7 @@ function App() {
               style={{ width: '20rem' }} />
           </Form>
         )}
-        {message && (message === 'Correct!' ? <Message size='tiny' success floating>{message}</Message> : <Message size='tiny' error content={'Incorrect! ' + answer.toUpperCase()} />)}
+        {message && (message === 'Correct!' ? <Message size='small' success floating>{message}</Message> : <Message size='small' error content={'Incorrect! ' + answer.toUpperCase()} />)}
         <Score total={total} />
       </div>
     </MainContainer>
@@ -82,7 +84,7 @@ export default App;
 
 const MainContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;

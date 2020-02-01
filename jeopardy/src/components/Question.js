@@ -13,24 +13,26 @@ const Question = props => {
 
 
     return (
-        <ScreenHolder>
-            <CategoryBox>
-                {props.question && props.question.category.title.toUpperCase()}
-            </CategoryBox>
+        <>
+            <ScreenHolder>
+                <CategoryBox>
+                    {props.question && props.question.category.title.toUpperCase()}
+                </CategoryBox>
 
-            {!reveal && (
-                <QuestionBox onClick={() => setReveal(true)} style={{ color: 'gold', fontSize: '6rem' }}>
-                    ${props.question.value}
-                </QuestionBox>
-            )}
+                {!reveal && (
+                    <QuestionBox onClick={() => setReveal(true)} style={{ color: 'gold', fontSize: '6rem' }}>
+                        ${props.question.value}
+                    </QuestionBox>
+                )}
 
-            {reveal && (
-                <QuestionBox>
-                    {props.question.question}
-                </QuestionBox>
-            )}
+                {reveal && (
+                    <QuestionBox style={{ fontFamily: "'Noto Serif', serif" }}>
+                        {props.question.question.toUpperCase()}
+                    </QuestionBox>
+                )}
 
-        </ScreenHolder>
+            </ScreenHolder>
+        </>
     )
 }
 
